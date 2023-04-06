@@ -1,16 +1,26 @@
-import { products } from '@/constant';
+import { addProductToLocalStorage, products } from '@/constant';
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 import React from 'react';
 
 const Cart = () => {
     const [all_product, setAllProduct] = useState([]);
+    const [click, setClick] = useState(0);
+    const action = (act, id) => {
+        setClick(click + 1);
+        if (act === 'add') {
+            return addProductToLocalStorage(id, 1);
+        }
+        else if (act === 'reduce') {
+            return addProductToLocalStorage(id, -1);
+        }
+    }
 
     useEffect(() => {
         const json_product = localStorage.getItem('product');
         const all_products = JSON.parse(json_product);
         setAllProduct(all_products)
-    }, []);
+    }, [click]);
     let totalPrice = 0;
 
     return (
@@ -26,7 +36,7 @@ const Cart = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {all_product.map(pro => {
+                    {all_product.length ? all_product?.map(pro => {
                         const singleProduct = products.find(product => product.id === pro.id);
                         const total = singleProduct.price * pro.quantity;
                         totalPrice = totalPrice + total;
@@ -51,18 +61,28 @@ const Cart = () => {
                                 <td>{pro.quantity}</td>
                                 <td>{total}</td>
                                 <th>
-                                    <button className="btn btn-outline btn-primary btn-xs">Add</button>
-                                    <button className="ms-2 btn btn-outline btn-error btn-xs">Reduce</button>
+                                    <button className="btn btn-outline btn-primary btn-xs" onClick={() => action('add', singleProduct.id)}>Add</button>
+                                    <button className="ms-2 btn btn-outline btn-error btn-xs" onClick={() => action('reduce', singleProduct.id)}>Reduce</button>
                                 </th>
                             </tr>
 
                         )
-                    })}
+                    })
+                        :
+                        <tr>
+                            <td></td>
+                            <td className='sm:text-2xl md:text-3xl font-bold'>You didn't add any product on your cart.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
                     <tr>
                         <td></td>
                         <td></td>
                         <td className='font-bold'>Total Price</td>
                         <td>{totalPrice}</td>
+                        <td><button className="ms-2 btn btn-outline btn-primary font-bold text-md">Checkout</button></td>
                     </tr>
                 </tbody>
             </table>

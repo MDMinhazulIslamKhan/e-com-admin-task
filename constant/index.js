@@ -106,8 +106,8 @@ const navLinks = [
         title: "Dashboard",
     },
     {
-        id: "/login",
-        title: "Login",
+        id: "/cart",
+        title: "Cart",
     },
 ];
 
@@ -126,7 +126,10 @@ const addProductToLocalStorage = (id, quantity) => {
                 id: parseInt(selected_product.id),
                 quantity: parseInt(selected_product.quantity) + parseInt(quantity)
             };
-            added_all_product[index] = edited_item;
+            if (edited_item.quantity === 0) {
+                added_all_product.splice(index, 1);
+            }
+            else { added_all_product[index] = edited_item; }
             localStorage.setItem('product', JSON.stringify(added_all_product))
         }
         else {

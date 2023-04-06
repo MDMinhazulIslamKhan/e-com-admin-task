@@ -6,6 +6,7 @@ import { addProductToLocalStorage, products } from "../constant";
 
 export default function Home() {
   const router = useRouter();
+
   const addProduct = (id) => {
     addProductToLocalStorage(id, 1);
     router.push('/cart');

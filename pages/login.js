@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 
 const Login = () => {
+    const router = useRouter();
+    const [login, setLogin] = useState(null);
+
+    useEffect(() => {
+        const people = localStorage.getItem('people');
+        const login = JSON.parse(people);
+        setLogin(login)
+    }, []);
+    if (login) {
+        router.push('/');
+    }
+
     const [showPassword, handleShowPassWord] = useState(false);
+    const [errorMassage, setErrorMassage] = useState('');
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = ({ phone, password }) => {
+
+        fetch(`http://localhost:5000/public?phone=${phone}&password=${password}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success === false) {
+                    return setErrorMassage(data.massage);
+                }
+                else {
+                    localStorage.setItem('people', JSON.stringify(data.massage));
+                    return router.push('/');
+                };
+            })
     };
-    let errorMassage;
     return (
         <div className='flex justify-center items-center'>
             <div className="card w-full max-w-sm shadow-2xl bg-base-100">
@@ -21,7 +45,7 @@ const Login = () => {
                                 <span className="label-text">Phone Number</span>
                             </label>
                             <input
-                                placeholder="+8801234567890"
+                                placeholder="01234567890"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("phone", {
                                     required: {
@@ -29,12 +53,13 @@ const Login = () => {
                                         message: 'Phone Number is required'
                                     },
                                     pattern: {
-                                        value: /^\+8801{1}[3456789]{1}[0-9]{8}/,
-                                        message: 'Please add valid Phone Number. Ex: (+8801234567890)'
+                                        value: /(^(01){1}[3456789]{1}(\d){8})$/,
+
+                                        message: 'Please add valid Phone Number. Ex: (01234567890)'
                                     },
                                     maxLength: {
-                                        value: 14,
-                                        message: 'Please add valid Phone Number.'
+                                        value: 11,
+                                        message: 'Please add valid 11 digit Phone Number.'
                                     }
                                 })}
                             />
@@ -76,7 +101,7 @@ const Login = () => {
                             </label>
                         </div>
                         <div className={`form-control ${!errorMassage && 'mt-6'}`}>
-                            {errorMassage}
+                            <p className='text-red-500 mb-2'>{errorMassage}</p>
                             <button className="btn btn-primary text-white font-bold">Login</button>
                         </div>
                     </form>
