@@ -111,5 +111,32 @@ const navLinks = [
     },
 ];
 
+const addProductToLocalStorage = (id, quantity) => {
+    const item = {
+        id: parseInt(id),
+        quantity: parseInt(quantity)
+    };
+    const storage = localStorage.getItem('product');
+    const added_all_product = JSON.parse(storage);
+    if (added_all_product) {
+        const selected_product = added_all_product.find(p => p?.id == id);
+        if (selected_product) {
+            const index = added_all_product.indexOf(selected_product);
+            const edited_item = {
+                id: parseInt(selected_product.id),
+                quantity: parseInt(selected_product.quantity) + parseInt(quantity)
+            };
+            added_all_product[index] = edited_item;
+            localStorage.setItem('product', JSON.stringify(added_all_product))
+        }
+        else {
+            added_all_product.push(item)
+            localStorage.setItem('product', JSON.stringify(added_all_product))
+        }
+    }
+    else {
+        localStorage.setItem('product', JSON.stringify([item]))
+    }
+}
 
-export { products, navLinks }
+export { products, navLinks, addProductToLocalStorage }

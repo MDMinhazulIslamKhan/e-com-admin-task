@@ -1,10 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 import Image from "next/image";
-import { products } from "../constant";
+import { addProductToLocalStorage, products } from "../constant";
 
 export default function Home() {
+  const router = useRouter();
   const addProduct = (id) => {
+    addProductToLocalStorage(id, 1);
+    router.push('/cart');
   }
   return (
     <>
