@@ -2,6 +2,7 @@ import { addProductToLocalStorage, products } from '@/constant';
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
 
 const Cart = () => {
     const [all_product, setAllProduct] = useState([]);
@@ -22,7 +23,6 @@ const Cart = () => {
         setAllProduct(all_products)
     }, [click]);
     let totalPrice = 0;
-
     return (
         <div className="overflow-x-auto w-full">
             <table className="table w-full">
@@ -82,7 +82,7 @@ const Cart = () => {
                         <td></td>
                         <td className='font-bold'>Total Price</td>
                         <td>{totalPrice}</td>
-                        <td><button className="ms-2 btn btn-outline btn-primary font-bold text-md">Checkout</button></td>
+                        <td><Link href='/dashboard/checkout' className={`ms-2 btn btn-outline btn-primary font-bold text-md ${!all_product.length && 'btn-disabled'}`}>Checkout</Link></td>
                     </tr>
                 </tbody>
             </table>

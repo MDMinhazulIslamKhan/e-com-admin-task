@@ -37,10 +37,10 @@ const products = [
     {
         id: 5,
         image: shirt,
-        name: 'Samsung S20',
+        name: 'Long Sleeve Shirt',
         short_dis: 'New Stylish Long Sleeve Casual Shirt for Men.',
         long_dis: `The Galaxy S20 Ultra is Samsung's newest Flagship Smartphone with the latest most advanced state-of-the-art OLED Display with a Full Screen design. Size: 6.2 inches. Android 10, upgradable to Android 13, One UI 5. Internal: 128GB 8GB RAM.`,
-        price: 80000
+        price: 1500
     },
     {
         id: 6,

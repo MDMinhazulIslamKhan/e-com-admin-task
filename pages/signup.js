@@ -42,6 +42,7 @@ const Login = () => {
                                 <span className="label-text">Name</span>
                             </label>
                             <input
+                                autoComplete='off'
                                 type="text"
                                 placeholder="Your Name"
                                 className="input input-bordered w-full max-w-xs"
@@ -66,6 +67,7 @@ const Login = () => {
                                 <span className="label-text">Phone Number</span>
                             </label>
                             <input
+                                autoComplete='off'
                                 placeholder="01234567890"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("phone", {

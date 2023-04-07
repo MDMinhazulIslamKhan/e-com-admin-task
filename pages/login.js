@@ -30,7 +30,7 @@ const Login = () => {
                 }
                 else {
                     localStorage.setItem('people', JSON.stringify(data.massage));
-                    return router.push('/');
+                    return router.push('/dashboard');
                 };
             })
     };
@@ -44,7 +44,7 @@ const Login = () => {
                             <label className="label">
                                 <span className="label-text">Phone Number</span>
                             </label>
-                            <input
+                            <input autoComplete='off'
                                 placeholder="01234567890"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("phone", {
@@ -81,7 +81,7 @@ const Login = () => {
                                 }
                             </label>
                             <input
-                                type={showPassword ? 'password' : 'text'}
+                                type={showPassword ? 'text' : 'password'}
                                 placeholder="Your Password"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("password", {
