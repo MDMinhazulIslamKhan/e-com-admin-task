@@ -1,5 +1,6 @@
 import DashboardSidebar from '@/components/dashboardSidebar';
-import { products } from '@/constant';
+import Meta from '@/components/meta';
+import { backend, products } from '@/constant';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -33,7 +34,7 @@ const Checkout = () => {
     }, []);
 
 
-    all_product.map(pro => {
+    all_product?.map(pro => {
         const singleProduct = products.find(product => product.id === pro.id);
         const a = { product: singleProduct.name, quantity: pro.quantity, price: singleProduct.price };
         orderProduct.push(a);
@@ -43,16 +44,34 @@ const Checkout = () => {
 
     shippingInfo.price = price;
     shippingInfo.product = orderProduct;
+    shippingInfo.name = login?.name;
+    shippingInfo.phone = login?.phone;
+    shippingInfo.user = login?.id;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(shippingInfo);
+        fetch(`${backend}/order`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(shippingInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order successful.');
+                    localStorage.removeItem('product');
+                    router.push(`/dashboard/pendingorder?id=${login.id}`);
+                }
+            })
     }
 
-    return (
+    return (<>
+        <Meta title='Checkout - E-commerce' />
         <DashboardSidebar login={login}>
             <div className="p-2">
-                <h1 className='text-center text-primary text-lg sm:text-2xl font-bold'>Welcome to Your Dashboard</h1>
+                <h1 className='text-center my-5 text-lg sm:text-2xl font-bold'>Checkout</h1>
             </div>            <div className="overflow-x-auto px-5">
                 <table className="table w-full">
                     <thead>
@@ -64,7 +83,7 @@ const Checkout = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {all_product.length ? all_product?.map((pro, index) => {
+                        {all_product?.length ? all_product?.map((pro, index) => {
                             const singleProduct = products.find(product => product.id === pro.id);
                             const total = singleProduct.price * pro.quantity;
                             return (
@@ -87,14 +106,14 @@ const Checkout = () => {
                             :
                             <tr>
                                 <td></td>
-                                <td className='md:text-xl text-center font-bold'>You didn't add any product on your <span className='btn btn-outline btn-primary btn-xs'>cart</span></td>
+                                <td className='md:text-xl text-center font-bold'>You didn't add any product on your cart.</td>
                                 <td></td>
                                 <td></td>
                             </tr>
                         }
                         <tr>
                             <td></td>
-                            <td>For adding more product, Go to <Link href='/cart' className='text-primary text-lg font-semibold cursor-pointer'>Cart</Link> page.</td>
+                            <td>For adding more product, Go to <Link href='/cart' className='btn btn-outline btn-primary btn-xs'>Cart</Link> page.</td>
                             <th>Total</th>
                             <th>{price}</th>
                         </tr>
@@ -137,12 +156,13 @@ const Checkout = () => {
                         <input type="text" name="post" className='input input-bordered w-full max-w-xs' required onChange={(e) => setShippingInfo({ ...shippingInfo, postcode: e.target.value })} />
                     </div>
                     <div className="form-control w-full max-w-xs">
-                        <button className="btn btn-primary text-white font-bold">Confirm Order</button>
+                        <button className={`btn btn-primary text-white font-bold ${price === 0 && 'btn-disabled'}`}>Confirm Order</button>
                     </div>
                 </form>
             </div>
 
         </DashboardSidebar>
+    </>
     );
 };
 

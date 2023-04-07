@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Meta from '@/components/meta';
+import { backend } from '@/constant';
 
 
 const Login = () => {
@@ -22,7 +24,7 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const onSubmit = ({ phone, password }) => {
 
-        fetch(`http://localhost:5000/public?phone=${phone}&password=${password}`)
+        fetch(`${backend}/public?phone=${phone}&password=${password}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success === false) {
@@ -34,7 +36,8 @@ const Login = () => {
                 };
             })
     };
-    return (
+    return (<>
+        <Meta title='E-commerce - Login' />
         <div className='flex justify-center items-center'>
             <div className="card w-full max-w-sm shadow-2xl bg-base-100">
                 <div className="card-body">
@@ -45,7 +48,7 @@ const Login = () => {
                                 <span className="label-text">Phone Number</span>
                             </label>
                             <input autoComplete='off'
-                                placeholder="01234567890"
+                                placeholder="Admin Number: 01521438469"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("phone", {
                                     required: {
@@ -82,7 +85,7 @@ const Login = () => {
                             </label>
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="Your Password"
+                                placeholder="Admin Password: aaaaaa"
                                 className="input input-bordered w-full max-w-xs"
                                 {...register("password", {
                                     required: {
@@ -114,6 +117,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+    </>
     )
 };
 

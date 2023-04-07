@@ -48,7 +48,7 @@ const products = [
         name: 'Silk Katan Sharee',
         short_dis: 'Dot Printed Indian Silk Katan Sharee',
         long_dis: `Dot printed black and red color with simple design. This saree is long so can be draped around the body and over the shoulder. ***Katan material, ***Regular style, ***12 haat, ***46 Inch bohor, ***Size 4.8 meter.`,
-        price: 80000
+        price: 3500
     },
     {
         id: 7,
@@ -56,7 +56,7 @@ const products = [
         name: 'Lather Shoe',
         short_dis: 'Original lather shoe with gorgeous look.',
         long_dis: `Comfortable, Stylish & Elegant Bata Summer Sandal for men. There are three different color: blue, black and chocolate.`,
-        price: 12000
+        price: 4000
     },
     {
         id: 8,
@@ -68,7 +68,7 @@ const products = [
         Display: IPS, 60Hz, 5ms
         Ports: HDMI, VGA, 2x USB 3.2 Gen 1 Type-A
         Features: Flicker Free, Low Blue Light`,
-        price: 35000
+        price: 18000
     },
     {
         id: 9,
@@ -76,7 +76,7 @@ const products = [
         name: 'Trainers ',
         short_dis: 'Dot Printed Indian Silk Katan Sharee',
         long_dis: `Dot printed black and red color with simple design. This saree is long so can be draped around the body and over the shoulder. ***Katan material, ***Regular style, ***12 haat, ***46 Inch bohor, ***Size 4.8 meter.`,
-        price: 4800
+        price: 2200
     },
     {
         id: 10,
@@ -140,6 +140,9 @@ const addProductToLocalStorage = (id, quantity) => {
     else {
         localStorage.setItem('product', JSON.stringify([item]))
     }
-}
+};
 
-export { products, navLinks, addProductToLocalStorage }
+const backend = 'https://e-com-backend-ten.vercel.app';
+// const backend = 'http://localhost:5000/';
+
+export { products, navLinks, addProductToLocalStorage, backend }

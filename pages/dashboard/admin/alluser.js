@@ -1,4 +1,6 @@
 import DashboardSidebar from '@/components/dashboardSidebar';
+import Meta from '@/components/meta';
+import { backend } from '@/constant';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -21,7 +23,8 @@ const AllUser = ({ data }) => {
     }, []);
 
 
-    return (
+    return (<>
+        <Meta title='All users - Admin Dashboard' />
         <DashboardSidebar login={login}>
             <h1 className='text-center my-5 text-lg sm:text-2xl font-bold'>All User</h1>
             <div className="overflow-x-auto px-5">
@@ -49,11 +52,12 @@ const AllUser = ({ data }) => {
                 </table>
             </div>
         </DashboardSidebar >
+    </>
     );
 };
 
 export const getServerSideProps = async () => {
-    const res = await fetch("http://localhost:5000/allpublic");
+    const res = await fetch(`${backend}/allpublic`);
     const data = await res.json();
 
     return {

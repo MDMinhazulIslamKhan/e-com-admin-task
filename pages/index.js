@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router'
 import Image from "next/image";
 import { addProductToLocalStorage, products } from "../constant";
+import Meta from "@/components/meta";
 
 export default function Home() {
   const router = useRouter();
@@ -13,9 +14,7 @@ export default function Home() {
   }
   return (
     <>
-      <Head>
-        <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
-      </Head>
+      <Meta />
       <h1 className="text-center font-bold text-4xl my-4">All Products</h1>
       <div className="grid grid-cols-1 items-center lg:grid-cols-3 sm:grid-cols-2 gap-12">
         {products.map(product =>

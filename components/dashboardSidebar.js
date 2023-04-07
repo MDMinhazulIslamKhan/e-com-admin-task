@@ -20,8 +20,8 @@ const DashboardSidebar = (props) => {
                         </>
                     }
                     <li><Link href='/dashboard/checkout' className='hover:text-primary'>Checkout</Link></li>
-                    <li><Link href='/dashboard/pendingorder' className='hover:text-primary'>My Order</Link></li>
-                    <li><Link href='/dashboard/successorder' className='hover:text-primary'>Previous Order</Link></li>
+                    <li><Link href={`/dashboard/pendingorder?id=${props?.login?.id}`} className='hover:text-primary'>My Order</Link></li>
+                    <li><Link href={`/dashboard/successorder?id=${props?.login?.id}`} className='hover:text-primary'>Received Order</Link></li>
                 </ul>
 
             </div>

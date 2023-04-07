@@ -1,4 +1,5 @@
 import DashboardSidebar from '@/components/dashboardSidebar';
+import Meta from '@/components/meta';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -16,7 +17,8 @@ const Dashboard = () => {
         setLogin(login);
     }, []);
     return (
-        <div>
+        <>
+            <Meta title='E-commerce - Dashboard' />
             <DashboardSidebar login={login}>
                 <h1 className='text-center my-5 text-primary text-lg sm:text-2xl font-bold'>Welcome to {login?.x === '111' ? 'Admin' : 'Your'} Dashboard</h1>
                 <div className='mx-5 p-5 h-80 rounded-lg bg-white'>
@@ -29,7 +31,7 @@ const Dashboard = () => {
                     </>}
                 </div>
             </DashboardSidebar>
-        </div>
+        </>
     );
 };
 

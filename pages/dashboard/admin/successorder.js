@@ -1,8 +1,12 @@
 import DashboardSidebar from '@/components/dashboardSidebar';
+import Meta from '@/components/meta';
+import { backend } from '@/constant';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-const SuccessOrder = () => {
+const SuccessOrder = ({ data }) => {
+    const allOrder = data.result;
+
     const [login, setLogin] = useState('wait');
     const router = useRouter();
 
@@ -19,7 +23,8 @@ const SuccessOrder = () => {
         setLogin(login);
     }, []);
 
-    return (
+    return (<>
+        <Meta title='Delivered Order - Admin Dashboard' />
         <DashboardSidebar login={login}>
             <h1 className='text-center my-5 text-lg sm:text-2xl font-bold'>Delivered Order</h1>
             <div className="overflow-x-auto px-5">
@@ -27,39 +32,53 @@ const SuccessOrder = () => {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Role</th>
+                            <th>Customer</th>
+                            <th>Shipping Address</th>
+                            <th>Products</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
-                        {/* row 2 */}
-                        <tr>
-                            <th>2</th>
-                            <td>Hart Hagerty</td>
-                            <td>Desktop Support Technician</td>
-                            <td>Purple</td>
-                        </tr>
-                        {/* row 3 */}
-                        <tr>
-                            <th>3</th>
-                            <td>Brice Swyre</td>
-                            <td>Tax Accountant</td>
-                            <td>Red</td>
-                        </tr>
+                        {allOrder?.map((user, index) => {
+                            return <>
+                                <tr>
+                                    <th>{index + 1}</th>
+                                    <td>{user.name}</td>
+                                    <td>
+                                        <ul className="list-none">
+                                            <li>{user.address}, {user.city}</li>
+                                            <li>Phone: {user.phone}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul className='ms-2 list-disc'>
+                                            {user?.product.map(p => {
+                                                return <li>{p.product}---{p.quantity}nos</li>
+                                            })}
+                                        </ul>
+                                    </td>
+                                    <td>{user?.price} tk</td>
+                                </tr >
+                            </>
+                        })}
                     </tbody>
                 </table>
             </div>
         </DashboardSidebar>
+    </>
     );
 };
 
+export const getServerSideProps = async () => {
+    const res = await fetch(`${backend}/allorder?status=ok`);
+    const data = await res.json();
+
+    return {
+        props: {
+            data
+        }
+    }
+
+}
 
 export default SuccessOrder;
