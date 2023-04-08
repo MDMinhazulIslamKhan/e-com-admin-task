@@ -31,6 +31,7 @@ const PendingOrder = ({ data }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                router.replace(router.asPath);
             })
 
     }
@@ -72,7 +73,7 @@ const PendingOrder = ({ data }) => {
                                     </td>
                                     <td>{user?.price} tk</td>
                                     <td>
-                                        <button className="btn text-white btn-primary btn-sm" onClick={() => approved(user)}>Approved</button>
+                                        <button className="btn text-white btn-primary btn-sm" onClick={() => approved(user)}>Approve</button>
                                     </td>
                                 </tr >
                             </>
