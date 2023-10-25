@@ -1,6 +1,6 @@
 # **Ecommerce Website (with NextJs).**
 
-### **Live Link: https://e-com-admin-task.vercel.app/**
+### **Live Link: https://e-com-admin-task-git-main-mdminhazulislamkhan.vercel.app**
 
 ### **Backend Github: https://github.com/MDMinhazulIslamKhan/e-com-backend**
 
@@ -9,7 +9,6 @@
 ## Used Technology
 
 - NextJs
-
 - React Hook form
 - Tailwind CSS
 - Daisy UI
@@ -18,17 +17,16 @@
 
 ## FUNCTIONALITY
 
-- All tutor with pagination and searching
-- Tutor booking
-  - Cancel booking
-- See details of tutor
+- See all products
 - Add to cart
-- User and Tutor different login and registration
-- Tutor can cancel and accept order
-- Admin different dashboard
-- Admin can update all tutor and user profile
-- Everyone can update his profile and change his password
-- Role base activity
+- Place order
+- Admin and user dashboard
+- See all own order
+- See all own pending order
+- Admin can see all user
+- Admin can see all pending order
+- Admin can accept pending order
+- Admin can see all delivered order
 
 ## ROLES
 
@@ -37,6 +35,8 @@
 - See all products
 - Add to cart
 - Order product
+- See all own order
+- See all own pending order
 
   **ADMIN**
 
